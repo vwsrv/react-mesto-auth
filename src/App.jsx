@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Header from './components/Header.jsx'
 import Main from './components/Main.jsx'
 import Footer from './components/Footer.jsx'
@@ -8,7 +8,7 @@ function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
-
+    
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true)
         document.querySelector(".popup_form_update").classList.add("popup_opened");
@@ -25,7 +25,6 @@ function App() {
     }
 
     function closeAllPopups() {
-        console.log('ОШ')
         setAddPlacePopupOpen(false)
         setEditProfilePopupOpen(false)
         setEditAvatarPopupOpen(false)
@@ -78,20 +77,6 @@ function App() {
                     <span className="popup__input-error avatar-input-error"></span>
             </lebel>
         </PopupWithForm>
-    <template className="element-template">
-        <article className="element">
-            <button type="button" className="element__delete-btn" aria-label="Удалить"></button>
-            <img src="#" alt="" className="element__image" />
-            <div className="element__info">  
-                <h2 className="element__title"></h2>
-                <div className="element__button">
-                    <button type="button" className="element__like-btn" aria-label="Нравится"></button>
-                    <p className="element__like-counter"></p>
-                </div>
-            </div>
-        </article>
-    </template>
-        <script type="module" src="./pages/index.js"></script>
   </div>
   )
 }
