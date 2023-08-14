@@ -5,7 +5,7 @@ export default function PopupWithForm(props) {
 
     return( 
         <div className={`popup popup_form_${name} ${isOpen && 'popup_opened'}`}>
-            <div className="popup__container">
+            <div className={`popup__container popup__container-${name}`}>
                 <button type="reset" className="popup__close-btn" aria-label="Закрыть" onClick={onClose}></button>
                 <h2 className="popup__title">{title}</h2>
                 <form className="popup__form" id ="popup__form_edit" name={name} noValidate>

@@ -4,6 +4,11 @@ import Main from './components/Main.jsx'
 import Footer from './components/Footer.jsx'
 import PopupWithForm from './components/PopupWithForm.jsx'
 import ImagePopup from './components/ImagePopup.jsx'
+import {
+    popupFormAdd,
+    popupFormEdit,
+    popupFormUpdate
+} from './utils/constants.js'
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -13,17 +18,14 @@ function App() {
     
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true)
-        document.querySelector(".popup_form_update").classList.add("popup_opened");
     }
     
     function handleEditProfileClick() {
         setEditProfilePopupOpen(true)
-        document.querySelector(".popup_form_edit").classList.add("popup_opened");
     }
     
     function handleAddPlaceClick() {
         setAddPlacePopupOpen(true)
-        document.querySelector(".popup_form_add").classList.add("popup_opened");
     }
 
     function handleCardClick(cardData) {

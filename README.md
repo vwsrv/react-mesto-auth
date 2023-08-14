@@ -1,8 +1,24 @@
-# React + Vite
+# Яндекс.Практикум
+# Проект: Mesto-React
+# GH-Pages: https://vwsrv.github.io/mesto-react/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Цели и задачи:
+- Апробация полученных теоретических и практических навыков на примере реального ТЗ:
 
-Currently, two official plugins are available:
+[Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Используемые технологии:
+## React, HTML, CSS.
+## Nested BEM.
+## Grid Layout.
+## Flex.
+
+# Функционал проекта:
+- получение данных с сервера;
+- дефолтное наполнение контента страницы с использованием данных сервера;
+- Редактирование профиля;
+- Лайки;
+- Добавление карточек с изображениями;
+- Удаление карточек с изображениями;
+- Template модальных форм;
+- Просмотр изображений;
