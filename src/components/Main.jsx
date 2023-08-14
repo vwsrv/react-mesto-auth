@@ -29,11 +29,10 @@ export default function Main(props) {
     }, [])
     
     return(
-        <>
         <main className="content">
             <section className="profile">
                 <div className="profile__avatar">
-                    <img alt="Мужик" className="profile__avatar-image" src={userData.avatar} />
+                    <img alt="Фотография профиля" className="profile__avatar-image" src={userData.avatar} />
                     <button className="profile__avatar-btn" onClick={onEditAvatar}></button>
                 </div>
                 <div className="profile__info">
@@ -46,11 +45,11 @@ export default function Main(props) {
             <section className="elements">
             {cards.map(card => (
                 <Card
+                    key = {card._id}
                     card = {card}
                     onCardClick = {onCardClick}
                 />))}
             </section>
         </main>
-        </>
     );
 };

@@ -6,9 +6,9 @@ export default function Card(props) {
     }
 
     return (
-            <article key={card.id} className="element">
+            <article className="element">
                 <button type="button" className="element__delete-btn" aria-label="Удалить"></button>
-                <img src={card.link} alt="" className="element__image" onClick={ handleCardClick }/>
+                <img src={card.link} alt={card.title} className="element__image" onClick={ handleCardClick }/>
                 <div className="element__info">  
                     <h2 className="element__title">{card.name}</h2>
                     <div className="element__button">
