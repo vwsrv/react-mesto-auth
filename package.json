@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "homepage": "https://vwsrv.github.io/",
     "predeploy": "yarn run build",
-    "deploy": "gh-pages -b main -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "gh-pages": "^6.0.0",
