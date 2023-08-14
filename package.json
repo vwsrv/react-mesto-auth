@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "homepage": "https://vwsrv.github.io/",
+    "homepage": "https://vwsrv.github.io/mesto-react",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist"
   },

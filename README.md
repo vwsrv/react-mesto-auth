@@ -1,6 +1,7 @@
 # Яндекс.Практикум
-# Проект: Mesto-React
-# GH-Pages: https://vwsrv.github.io/mesto-react/
+
+## Проект: Mesto-React
+## GH-Pages: https://vwsrv.github.io/mesto-react/
 
 # Цели и задачи:
 - Апробация полученных теоретических и практических навыков на примере реального ТЗ:
