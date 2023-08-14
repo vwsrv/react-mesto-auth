@@ -4,7 +4,7 @@ import Card from '../components/Card.jsx'
 
 export default function Main(props) {
 
-    const {onEditProfile, onAddPlace, onEditAvatar} = props;
+    const {onEditProfile, onAddPlace, onEditAvatar, onCardClick} = props;
     const [userData, setUserData] = useState({});
     const [cards, setUsersCards] = useState([]);
 
@@ -21,7 +21,6 @@ export default function Main(props) {
     useEffect(() => {
         api.getInitialCards()
         .then((res) => {
-            console.log(res)
             setUsersCards(res)
         })
         .catch((error) => {
@@ -47,12 +46,9 @@ export default function Main(props) {
             <section className="elements">
             {cards.map(card => (
                 <Card
-                    cardId = {card.id}
-                    cardName = {card.name}
-                    cardImage = {card.link}
-                    cardLikes = {card.likes.length}
-                >
-                </Card>))}
+                    card = {card}
+                    onCardClick = {onCardClick}
+                />))}
             </section>
         </main>
         </>

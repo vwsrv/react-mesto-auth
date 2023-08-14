@@ -3,11 +3,13 @@ import Header from './components/Header.jsx'
 import Main from './components/Main.jsx'
 import Footer from './components/Footer.jsx'
 import PopupWithForm from './components/PopupWithForm.jsx'
+import ImagePopup from './components/ImagePopup.jsx'
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState(null);
     
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true)
@@ -24,10 +26,15 @@ function App() {
         document.querySelector(".popup_form_add").classList.add("popup_opened");
     }
 
+    function handleCardClick(cardData) {
+        setSelectedCard(cardData)
+    }
+
     function closeAllPopups() {
         setAddPlacePopupOpen(false)
         setEditProfilePopupOpen(false)
         setEditAvatarPopupOpen(false)
+        setSelectedCard(false);
     }
 
   return (
@@ -37,6 +44,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        onCardClick = {handleCardClick}
       />
       <Footer />
       <PopupWithForm
@@ -77,6 +85,10 @@ function App() {
                     <span className="popup__input-error avatar-input-error"></span>
             </lebel>
         </PopupWithForm>
+        <ImagePopup 
+            card = {selectedCard}
+            onClose = {closeAllPopups}
+        />
   </div>
   )
 }

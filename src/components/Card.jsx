@@ -1,17 +1,19 @@
-import { useState } from "react"
-
 export default function Card(props) {
-    const {cardId, cardName, cardImage, cardLikes} = props;
+    const {card, onCardClick} = props;
+
+    function handleCardClick() {
+        onCardClick(card);
+    }
 
     return (
-            <article key={cardId} className="element">
+            <article key={card.id} className="element">
                 <button type="button" className="element__delete-btn" aria-label="Удалить"></button>
-                <img src={cardImage} alt="" className="element__image" />
+                <img src={card.link} alt="" className="element__image" onClick={ handleCardClick }/>
                 <div className="element__info">  
-                    <h2 className="element__title">{cardName}</h2>
+                    <h2 className="element__title">{card.name}</h2>
                     <div className="element__button">
                         <button type="button" className="element__like-btn" aria-label="Нравится"></button>
-                        <p className="element__like-counter">{cardLikes}</p>
+                        <p className="element__like-counter">{card.likes.length}</p>
                     </div>
                 </div>
             </article>
