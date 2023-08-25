@@ -5,7 +5,8 @@ import Footer from './Footer.jsx';
 import PopupWithForm from './PopupWithForm.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import { api } from '../utils/Api.js';
-import { UserInfoContext } from '../contexts/CurrentUserContext.js';
+import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import { UsersCardsContext } from '../contexts/UsersCardsContext.js';
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -13,6 +14,7 @@ function App() {
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
+    const [usersCards, setCards] = useState([]);
 
     useEffect(() => {
         api.getUserProfile()
@@ -23,6 +25,16 @@ function App() {
                 console.log(`Ошибка загрузки информации о пользователе: ${error}`);
             })
     }, []);
+
+    useEffect(() => {
+        api.getInitialCards()
+            .then((res) => {
+                setCards(res)
+            })
+            .catch((error) => {
+                console.log(`Ошибка загрузки карточек пользователей: ${error}`);
+            })
+    }, [])
 
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true)
@@ -47,17 +59,36 @@ function App() {
         setSelectedCard(null);
     }
 
+    function handleCardLike(card) {
+        const isLiked = card.likes.some(i => i._id === currentUser._id);
+        api.changeLikeStatus(card._id, isLiked)
+        .then((newCard) => {
+            setCards((state) => state.map((cardItem) => cardItem._id === card._id ? newCard : cardItem));    
+        });
+    }
+
+    function handleDeleteCard(card) {
+        api.deleteUserCard(card._id)
+        .then(() => {
+            setCards((cards) => cards.filter((cardItem) => card._id !== cardItem._id))
+        })
+    }
+
     return (
         <div className="page">
             <Header />
-            <UserInfoContext.Provider value={currentUser}>
-                <Main
-                    onEditAvatar={handleEditAvatarClick}
-                    onEditProfile={handleEditProfileClick}
-                    onAddPlace={handleAddPlaceClick}
-                    onCardClick={handleCardClick}
-                />
-            </UserInfoContext.Provider>
+            <CurrentUserContext.Provider value={currentUser}>
+                <UsersCardsContext.Provider value={usersCards}>
+                    <Main
+                        onEditAvatar={handleEditAvatarClick}
+                        onEditProfile={handleEditProfileClick}
+                        onAddPlace={handleAddPlaceClick}
+                        onCardClick={handleCardClick}
+                        onCardLike={handleCardLike}
+                        onCardDelete={handleDeleteCard}
+                    />
+                </UsersCardsContext.Provider>
+            </CurrentUserContext.Provider>
             <Footer />
             <PopupWithForm
                 name='edit'

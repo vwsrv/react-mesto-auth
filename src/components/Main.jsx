@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { api } from '../utils/Api.js';
+import React from "react";
 import Card from '../components/Card.jsx';
-import { UserInfoContext } from "../contexts/CurrentUserContext.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
+import { UsersCardsContext } from "../contexts/UsersCardsContext.js";
 
 export default function Main(props) {
-    const currentUser = React.useContext(UserInfoContext);
-    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick } = props;
-    // const [userData, setUserData] = useState({});
-    const [cards, setUsersCards] = useState([]);
-
-    useEffect(() => {
-        api.getUserProfile()
-            .then((res) => {
-                setUserData(res)
-            })
-            .catch((error) => {
-                console.log(`Ошибка загрузки информации о пользователе: ${error}`);
-            })
-    }, []);
-
-    useEffect(() => {
-        api.getInitialCards()
-            .then((res) => {
-                setUsersCards(res)
-            })
-            .catch((error) => {
-                console.log(`Ошибка загрузки карточек пользователей: ${error}`);
-            })
-    }, [])
+    const currentUser = React.useContext(CurrentUserContext);
+    const cards = React.useContext(UsersCardsContext);
+    const { onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, onCardDelete } = props;
 
     return (
         <main className="content">
@@ -41,7 +20,7 @@ export default function Main(props) {
                     <button type="button" className="profile__button-edit" aria-label="Редактировать" onClick={onEditProfile}></button>
                     <p className="profile__description">{currentUser.about}</p>
                 </div>
-                <button type="button" className="profile__button-add" aria-label="Добавить" onClick={onAddPlace}></button>
+                <button type="button" className="profile__button-add" aria-label="Добавить" onClick={onAddPlace} />
             </section>
             <section className="elements">
                 {cards.map(card => (
@@ -49,6 +28,8 @@ export default function Main(props) {
                         key={card._id}
                         card={card}
                         onCardClick={onCardClick}
+                        onCardLike={onCardLike}
+                        onCardDelete={onCardDelete}
                     />))}
             </section>
         </main>

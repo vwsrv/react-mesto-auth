@@ -12,3 +12,9 @@
     min-width: 22px;
     padding: 0;
 }
+
+.element__like-btn_active:hover {
+    background-image: url("../../../../images/like__black.svg");
+    opacity: .6;
+}
+
