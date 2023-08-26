@@ -3,10 +3,10 @@ import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.jsx';
 import PopupWithForm from './PopupWithForm.jsx';
+import EditProfilePopup from './EditProfilePopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
-import { UsersCardsContext } from '../contexts/UsersCardsContext.js';
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -14,17 +14,7 @@ function App() {
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState(null);
     const [currentUser, setCurrentUser] = useState({});
-    const [usersCards, setCards] = useState([]);
-
-    useEffect(() => {
-        api.getUserProfile()
-            .then((res) => {
-                setCurrentUser(res)
-            })
-            .catch((error) => {
-                console.log(`Ошибка загрузки информации о пользователе: ${error}`);
-            })
-    }, []);
+    const [cards, setCards] = useState([]);
 
     useEffect(() => {
         api.getInitialCards()
@@ -35,6 +25,16 @@ function App() {
                 console.log(`Ошибка загрузки карточек пользователей: ${error}`);
             })
     }, [])
+
+    useEffect(() => {
+        api.getUserProfile()
+            .then((res) => {
+                setCurrentUser(res)
+            })
+            .catch((error) => {
+                console.log(`Ошибка загрузки информации о пользователе: ${error}`);
+            })
+    }, []);
 
     function handleEditAvatarClick() {
         setEditAvatarPopupOpen(true)
@@ -59,18 +59,26 @@ function App() {
         setSelectedCard(null);
     }
 
+    
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
         api.changeLikeStatus(card._id, isLiked)
-        .then((newCard) => {
-            setCards((state) => state.map((cardItem) => cardItem._id === card._id ? newCard : cardItem));    
-        });
+            .then((newCard) => {
+                setCards((state) => state.map((cardItem) => cardItem._id === card._id ? newCard : cardItem));
+            });
     }
 
     function handleDeleteCard(card) {
         api.deleteUserCard(card._id)
-        .then(() => {
-            setCards((cards) => cards.filter((cardItem) => card._id !== cardItem._id))
+            .then(() => {
+                setCards((cards) => cards.filter((cardItem) => card._id !== cardItem._id))
+            })
+    }
+    
+    function handleUpdateUser(userData) {
+        api.setUserProfile({userData})
+        .then((updatedUserData) => {
+            setCurrentUser(updatedUserData)
         })
     }
 
@@ -78,32 +86,22 @@ function App() {
         <div className="page">
             <Header />
             <CurrentUserContext.Provider value={currentUser}>
-                <UsersCardsContext.Provider value={usersCards}>
-                    <Main
-                        onEditAvatar={handleEditAvatarClick}
-                        onEditProfile={handleEditProfileClick}
-                        onAddPlace={handleAddPlaceClick}
-                        onCardClick={handleCardClick}
-                        onCardLike={handleCardLike}
-                        onCardDelete={handleDeleteCard}
-                    />
-                </UsersCardsContext.Provider>
-            </CurrentUserContext.Provider>
+                <Main
+                    cards={cards}
+                    onEditAvatar={handleEditAvatarClick}
+                    onEditProfile={handleEditProfileClick}
+                    onAddPlace={handleAddPlaceClick}
+                    onCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    onCardDelete={handleDeleteCard}
+                />
             <Footer />
-            <PopupWithForm
-                name='edit'
-                title='Редактировать профиль'
+            <EditProfilePopup
+                name='edit' 
+                onClose={closeAllPopups} 
                 isOpen={isEditProfilePopupOpen}
-                onClose={closeAllPopups}>
-                <div htmlFor="popup__input_type_name" className="popup__field">
-                    <input type="text" name="name" className="popup__input popup__input_type_name" placeholder="Введите имя профиля" id="name-input" minLength="2" maxLength="40" required />
-                    <span className="popup__input-error name-input-error"></span>
-                </div>
-                <div htmlFor="popup__input_type_description" className="popup__field">
-                    <input type="text" name="about" className="popup__input popup__input_type_description" placeholder="Введите описание профиля" minLength="2" maxLength="200" id="description-input" required />
-                    <span className="popup__input-error description-input-error"></span>
-                </div>
-            </PopupWithForm>
+                onSubmit={handleUpdateUser}
+            />
             <PopupWithForm
                 name='add'
                 title='Добавить новое место'
@@ -132,6 +130,7 @@ function App() {
                 card={selectedCard}
                 onClose={closeAllPopups}
             />
+            </CurrentUserContext.Provider>
         </div>
     )
 }
