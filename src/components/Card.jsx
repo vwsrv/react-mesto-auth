@@ -24,12 +24,22 @@ export default function Card(props) {
 
     return (
         <article className="element">
-            {isOwn && <button type="button" className="element__delete-btn" aria-label="Удалить" onClick={handleDeleteCard} />}
-            <img src={card.link} alt={card.title} className="element__image" onClick={handleCardClick} />
+            {isOwn && <button
+                type="button"
+                className="element__delete-btn"
+                aria-label="Удалить"
+                onClick={handleDeleteCard} />}
+            <img src={card.link}
+                alt={card.title}
+                className="element__image"
+                onClick={handleCardClick} />
             <div className="element__info">
                 <h2 className="element__title">{card.name}</h2>
                 <div className="element__button">
-                    <button type="button" className={cardLikeButtonClassName} aria-label="Нравится" onClick={handleCardLike}></button>
+                    <button type="button"
+                        className={cardLikeButtonClassName}
+                        aria-label="Нравится"
+                        onClick={handleCardLike}></button>
                     <p className="element__like-counter">{card.likes.length}</p>
                 </div>
             </div>

@@ -10,15 +10,25 @@ export default function Main(props) {
         <main className="content">
             <section className="profile">
                 <div className="profile__avatar">
-                    <img alt="Фотография профиля" className="profile__avatar-image" src={currentUser.avatar} />
-                    <button className="profile__avatar-btn" onClick={onEditAvatar}></button>
+                    <img alt="Фотография профиля"
+                        className="profile__avatar-image"
+                        src={currentUser.avatar} />
+                    <button
+                        className="profile__avatar-btn"
+                        onClick={onEditAvatar}></button>
                 </div>
                 <div className="profile__info">
                     <h1 className="profile__name">{currentUser.name}</h1>
-                    <button type="button" className="profile__button-edit" aria-label="Редактировать" onClick={onEditProfile}></button>
+                    <button type="button"
+                        className="profile__button-edit"
+                        aria-label="Редактировать"
+                        onClick={onEditProfile}></button>
                     <p className="profile__description">{currentUser.about}</p>
                 </div>
-                <button type="button" className="profile__button-add" aria-label="Добавить" onClick={onAddPlace} />
+                <button type="button"
+                    className="profile__button-add"
+                    aria-label="Добавить"
+                    onClick={onAddPlace} />
             </section>
             <section className="elements">
                 {cards.map(card => (
