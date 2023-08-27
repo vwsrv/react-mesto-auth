@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import Header from './Header.jsx';
 import Main from './Main.jsx';
 import Footer from './Footer.jsx';
-import PopupWithForm from './PopupWithForm.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
+import AddPlacePopup from './AddPlacePopup.jsx';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
@@ -90,6 +90,13 @@ function App() {
         })
     }
 
+    function handleAddPlaceSubmit(cardData) {
+        api.setUserCard({cardData})
+        .then((newCard) => {
+            setCards([newCard, ...cards])
+        })
+    }
+
     return (
         <div className="page">
             <Header />
@@ -118,27 +125,13 @@ function App() {
                 isOpen={isEditAvatarPopupOpen}
                 onUpdateAvatar={handleUpdateAvatar} 
             />
-            </CurrentUserContext.Provider>
-
-
-
-
-
-
-            <PopupWithForm
-                name='add'
-                title='Добавить новое место'
+            <AddPlacePopup
+                cards={cards}
+                onClose={closeAllPopups}
                 isOpen={isAddPlacePopupOpen}
-                onClose={closeAllPopups}>
-                <div htmlFor="popup__input_type_title" className="popup__field">
-                    <input type="text" name="name" className="popup__input popup__input_type_title" placeholder="Название" minLength="2" maxLength="30" id="title-input" required />
-                    <span className="popup__input-error title-input-error"></span>
-                </div>
-                <div htmlFor="popup__input_type_link" className="popup__field">
-                    <input type="url" name="link" className="popup__input popup__input_type_link" placeholder="Ссылка на картинку" id="link-input" required />
-                    <span className="popup__input-error link-input-error"></span>
-                </div>
-            </PopupWithForm>
+                onAddPlace={handleAddPlaceSubmit}
+            />
+            </CurrentUserContext.Provider>
         </div>
     )
 }
