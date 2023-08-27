@@ -4,6 +4,7 @@ import Main from './Main.jsx';
 import Footer from './Footer.jsx';
 import PopupWithForm from './PopupWithForm.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
+import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
@@ -82,6 +83,13 @@ function App() {
         })
     }
 
+    function handleUpdateAvatar(userData) {
+        api.setUserProfileAvatar({userData})
+        .then((updatedUserAvatar) => {
+            setCurrentUser(updatedUserAvatar)
+        })
+    }
+
     return (
         <div className="page">
             <Header />
@@ -97,10 +105,26 @@ function App() {
                 />
             <Footer />
             <EditProfilePopup
-                onClose={closeAllPopups} 
                 isOpen={isEditProfilePopupOpen}
-                onSubmit={handleUpdateUser}
+                onClose={closeAllPopups} 
+                onUpdateUser={handleUpdateUser}
             />
+            <ImagePopup
+                card={selectedCard}
+                onClose={closeAllPopups}
+            />
+            <EditAvatarPopup
+                onClose={closeAllPopups}
+                isOpen={isEditAvatarPopupOpen}
+                onUpdateAvatar={handleUpdateAvatar} 
+            />
+            </CurrentUserContext.Provider>
+
+
+
+
+
+
             <PopupWithForm
                 name='add'
                 title='Добавить новое место'
@@ -115,21 +139,6 @@ function App() {
                     <span className="popup__input-error link-input-error"></span>
                 </div>
             </PopupWithForm>
-            <PopupWithForm
-                name='update'
-                title='Обновить аватар'
-                isOpen={isEditAvatarPopupOpen}
-                onClose={closeAllPopups}>
-                <div htmlFor="popup__input_type_link" className="popup__field">
-                    <input type="url" name="avatar" className="popup__input popup__input_type_link" placeholder="Ссылка на картинку" id="avatar-input" required />
-                    <span className="popup__input-error avatar-input-error"></span>
-                </div>
-            </PopupWithForm>
-            <ImagePopup
-                card={selectedCard}
-                onClose={closeAllPopups}
-            />
-            </CurrentUserContext.Provider>
         </div>
     )
 }

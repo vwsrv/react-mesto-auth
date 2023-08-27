@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-export default function EditProfilePopup({ isOpen, onClose, onSubmit }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     const [profileName, setName] = useState('');
     const [profileDescription, setDescription] = useState('');
     const currentUser = useContext(CurrentUserContext);
@@ -12,14 +12,9 @@ export default function EditProfilePopup({ isOpen, onClose, onSubmit }) {
         setDescription(currentUser.about);
     }, [currentUser])
 
-    function onChange(e) {
-        setName(e.target.value);
-        setDescription(e.target.value);
-    }
-
     function handleSubmit(e) {
         e.preventDefault();
-        onSubmit({
+        onUpdateUser({
             name: profileName,
             about: profileDescription,
         });
@@ -40,7 +35,7 @@ export default function EditProfilePopup({ isOpen, onClose, onSubmit }) {
                     placeholder="Введите имя профиля" id="name-input"
                     minLength="2"
                     maxLength="40"
-                    onChange={onChange}
+                    onChange={(e) => {setName(e.target.value)}}
                     defaultValue={profileName} required />
                 <span className="popup__input-error name-input-error"></span>
             </div>
@@ -52,7 +47,8 @@ export default function EditProfilePopup({ isOpen, onClose, onSubmit }) {
                     minLength="2"
                     maxLength="200"
                     id="description-input"
-                    onChange={(evt) => setDescription(evt.target.value)} defaultValue={profileDescription} required />
+                    onChange={(e) => {setDescription(e.target.value)}} 
+                    defaultValue={profileDescription} required />
                 <span className="popup__input-error description-input-error"></span>
             </div>
         </PopupWithForm>
