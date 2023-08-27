@@ -97,7 +97,6 @@ function App() {
                 />
             <Footer />
             <EditProfilePopup
-                name='edit' 
                 onClose={closeAllPopups} 
                 isOpen={isEditProfilePopupOpen}
                 onSubmit={handleUpdateUser}
