@@ -10,7 +10,7 @@ export default function PopupWithForm({name, title, children, isOpen, onClose, o
                     className="popup__close-btn"
                     aria-label="Закрыть"
                     onClick={onClose} />
-                <h2 className="popup__title">{title}</h2>
+                <h2 className={`popup__title popup__title_${name}`}>{title}</h2>
                 <form 
                     className="popup__form"
                     name={name}
