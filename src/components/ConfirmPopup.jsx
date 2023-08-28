@@ -1,7 +1,7 @@
 import PopupWithForm from "./PopupWithForm.jsx";
 import React from 'react';
 
-export default function ConfirmChangesPopup({ isOpen, isLoading, onClose, handleSubmit }) {
+export default function ConfirmPopup({ isOpen, isLoading, onClose, handleSubmit }) {
 
     function handleSubmitt(e) {
         e.preventDefault()

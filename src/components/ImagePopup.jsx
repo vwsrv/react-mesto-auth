@@ -1,8 +1,6 @@
 import React from "react";
 
-export default function ImagePopup(props) {
-
-    const { card, onClose } = props;
+export default function ImagePopup({ card, onClose }) {
 
     return (
         <div className={`popup popup_form_image ${card ? 'popup_opened' : ''}`}>

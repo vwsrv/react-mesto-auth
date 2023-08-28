@@ -6,7 +6,7 @@ import EditProfilePopup from './EditProfilePopup.jsx';
 import EditAvatarPopup from './EditAvatarPopup.jsx';
 import ImagePopup from './ImagePopup.jsx';
 import AddPlacePopup from './AddPlacePopup.jsx';
-import ConfirmChangesPopup from './ConfirmChangesPopup.jsx';
+import ConfirmPopup from './ConfirmPopup.jsx';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
 
@@ -186,7 +186,7 @@ function App() {
                     onAddPlace={handleAddPlaceSubmit}
                     isLoading={isLoading}
                 />
-                <ConfirmChangesPopup
+                <ConfirmPopup
                     cards={cards}
                     isLoading={isLoading}
                     isOpen={isConfirmChangesPopupOpen}

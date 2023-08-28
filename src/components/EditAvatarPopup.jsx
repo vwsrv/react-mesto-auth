@@ -9,7 +9,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
     useEffect(() => {
         if (isOpen && currentUser) {
             setUserAvatar('')
-        }   
+        }
     }, [currentUser, isOpen]);
 
     function onChange(e) {
