@@ -1,8 +1,7 @@
-import React from "react"
+import React, {useState} from "react"
 
-export default function PopupWithForm(props) {
-    const { name, title, children, isOpen, onClose, onSubmit } = props;
-
+export default function PopupWithForm({name, title, children, isOpen, onClose, onSubmit, buttonText, buttonTextLoading, isLoading}) {
+        
     return (
         <div className={`popup popup_form_${name} ${isOpen && 'popup_opened'}`}>
             <div className={`popup__container popup__container-${name}`}>
@@ -21,7 +20,8 @@ export default function PopupWithForm(props) {
                         <button 
                             type="submit"
                             className="popup__submit-btn"
-                            aria-label="Сохранить">Сохранить</button>
+                            aria-label="Сохранить"
+                            disabled={isLoading}>{isLoading ? `${buttonTextLoading}` : `${buttonText}`}</button>
                     </fieldset>
                 </form>
             </div>

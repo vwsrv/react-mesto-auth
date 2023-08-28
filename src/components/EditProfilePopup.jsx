@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     const [profileName, setName] = useState('');
     const [profileDescription, setDescription] = useState('');
     const currentUser = useContext(CurrentUserContext);
@@ -10,7 +10,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
-    }, [currentUser])
+    }, [currentUser, isOpen])
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -18,7 +18,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             name: profileName,
             about: profileDescription,
         });
-        onClose();
     }
 
     return (
@@ -27,7 +26,10 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
             title='Редактировать профиль'
             isOpen={isOpen}
             onClose={onClose}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            buttonText='Сохранить'
+            buttonTextLoading='Сохранение...'
+            isLoading={isLoading}>
             <div htmlFor="popup__input_type_name" className="popup__field">
                 <input type="text"
                     name="name"
@@ -36,7 +38,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     minLength="2"
                     maxLength="40"
                     onChange={(e) => {setName(e.target.value)}}
-                    defaultValue={profileName} required />
+                    value={profileName || ''} required />
                 <span className="popup__input-error name-input-error"></span>
             </div>
             <div htmlFor="popup__input_type_description" className="popup__field">
@@ -48,7 +50,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
                     maxLength="200"
                     id="description-input"
                     onChange={(e) => {setDescription(e.target.value)}} 
-                    defaultValue={profileDescription} required />
+                    value={profileDescription || ''} required />
                 <span className="popup__input-error description-input-error"></span>
             </div>
         </PopupWithForm>
