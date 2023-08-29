@@ -78,6 +78,9 @@ function App() {
         api.changeLikeStatus(card._id, isLiked)
             .then((newCard) => {
                 setCards((state) => state.map((cardItem) => cardItem._id === card._id ? newCard : cardItem));
+            })
+            .catch((err) => {
+                console.log(`Возникла ошибка при постановке лайка карточке: ${err}`)
             });
     }
     
