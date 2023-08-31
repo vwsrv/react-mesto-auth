@@ -72,7 +72,8 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
                         required: 'Поле, обязательное к заполнению.',
                         pattern: {
                             value: UrlPattern,
-                            message: 'Введите корректную ссылку на изображение.'}
+                            message: 'Введите корректную ссылку на изображение.'
+                        }
                     })}
                     name="link"
                     className="popup__input popup__input_type_link"

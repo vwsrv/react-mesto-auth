@@ -17,9 +17,9 @@ export default function PopupWithForm({ name, title, children, isOpen, onClose, 
                         {children}
                         <button
                             type="submit"
-                            className= {`popup__submit-btn ${isValid ? '' : 'popup__submit-btn_inactive'}`}
+                            className={isValid ? `popup__submit-btn` : `popup__submit-btn_inactive`}
                             aria-label="Сохранить"
-                            disabled={isLoading}>{isLoading ? `${buttonTextLoading}` : `${buttonText}`}</button>
+                        >{isLoading ? `${buttonTextLoading}` : `${buttonText}`}</button>
                     </fieldset>
                 </form>
             </div>

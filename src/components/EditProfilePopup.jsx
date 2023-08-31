@@ -11,7 +11,8 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
         register,
         watch,
         handleSubmit,
-        reset,       
+        reset,
+
         formState: {
             errors,
             isValid
