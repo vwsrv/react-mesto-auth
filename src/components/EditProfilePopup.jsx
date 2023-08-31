@@ -1,19 +1,32 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { useForm } from 'react-hook-form'
 import PopupWithForm from "./PopupWithForm";
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoading }) {
     const [profileName, setName] = useState('');
     const [profileDescription, setDescription] = useState('');
     const currentUser = useContext(CurrentUserContext);
+    const {
+        register,
+        watch,
+        handleSubmit,
+        reset,       
+        formState: {
+            errors,
+            isValid
+        }
+    } = useForm({
+        mode: "onBlur"
+    })
 
     useEffect(() => {
         setName(currentUser.name);
         setDescription(currentUser.about);
+        reset();
     }, [currentUser, isOpen])
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function onSubmit() {
         onUpdateUser({
             name: profileName,
             about: profileDescription,
@@ -26,32 +39,52 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
             title='Редактировать профиль'
             isOpen={isOpen}
             onClose={onClose}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             buttonText='Сохранить'
             buttonTextLoading='Сохранение...'
-            isLoading={isLoading}>
+            isLoading={isLoading}
+            isValid={isValid}>
             <div htmlFor="popup__input_type_name" className="popup__field">
-                <input type="text"
-                    name="name"
+                <input
+                    {...register('name', {
+                        required: 'Поле, обязательное к заполнению',
+                        minLength: {
+                            value: 2,
+                            message: 'Минимальная длина текущего значения: 2 символа'
+                        },
+                        maxLength: {
+                            value: 40,
+                            message: 'Минимальная длин текущего значения: 40 символов'
+                        }
+                    })}
+                    isValid={isValid}
                     className="popup__input popup__input_type_name"
                     placeholder="Введите имя профиля" id="name-input"
-                    minLength="2"
-                    maxLength="40"
                     onChange={(e) => { setName(e.target.value) }}
-                    value={profileName || ''} required />
-                <span className="popup__input-error name-input-error"></span>
+                    value={profileName || ''}
+                />
+                {errors?.name && <span className="popup__input-error name-input-error popup__error_visible">{errors?.name?.message}</span>}
             </div>
             <div htmlFor="popup__input_type_description" className="popup__field">
-                <input type="text"
-                    name="about"
+                <input
+                    {...register('about', {
+                        required: 'Поле обязательное к заполнению',
+                        minLength: {
+                            value: 2,
+                            message: 'Минимальная длина текущего значения: 2 символа'
+                        },
+                        maxLength: {
+                            value: 40,
+                            message: 'Минимальная длин текущего значения: 40 символов'
+                        }
+                    })}
+                    isValid={isValid}
                     className="popup__input popup__input_type_description"
                     placeholder="Введите описание профиля"
-                    minLength="2"
-                    maxLength="200"
                     id="description-input"
                     onChange={(e) => { setDescription(e.target.value) }}
                     value={profileDescription || ''} required />
-                <span className="popup__input-error description-input-error"></span>
+                {errors?.about && <span className="popup__input-error description-input-error popup__error_visible">{errors?.about?.message}</span>}
             </div>
         </PopupWithForm>
     )

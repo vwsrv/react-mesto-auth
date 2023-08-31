@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "react-hook-form"
+import { UrlPattern } from "../utils/UrlPattern";
 
 export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLoading }) {
     const [cardTitle, setCardTiltle] = useState('');
     const [cardLink, setCardLink] = useState('');
+    const {
+        register,
+        watch,
+        reset,
+        handleSubmit,
+        formState: {
+            errors,
+            isValid }
+    } = useForm({
+        mode: "onBlur"
+    })
 
     useEffect(() => {
         if (isOpen, cardLink, cardTitle) {
             setCardLink('');
             setCardTiltle('');
         }
+        reset();
     }, [cards, isOpen])
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function onSubmit() {
         onAddPlace({
             link: cardLink,
             name: cardTitle
@@ -27,33 +40,47 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
             title='Добавить новое место'
             isOpen={isOpen}
             onClose={onClose}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             buttonText='Добавить'
             buttonTextLoading='Подождите...'
-            isLoading={isLoading}>
+            isLoading={isLoading}
+            isValid={isValid}>
             <div htmlFor="popup__input_type_title" className="popup__field">
-                <input type="text"
-                    name="name"
+                <input
+                    {...register("name", {
+                        required: 'Поле, обязательное к заполнению',
+                        minLength: {
+                            value: 2,
+                            message: 'Минимальная длина текущего значения: 2 символа'
+                        },
+                        maxLength: {
+                            value: 40,
+                            message: 'Минимальная длина текущего значения: 40 символов'
+                        }
+                    })}
                     className="popup__input popup__input_type_title"
                     placeholder="Название"
-                    minLength="2"
-                    maxLength="30"
                     id="title-input"
                     onChange={(e) => { setCardTiltle(e.target.value) }}
                     value={cardTitle}
-                    required />
-                <span className="popup__input-error title-input-error"></span>
+                />
+                {errors?.name && <span className="popup__input-error title-input-error popup__error_visible">{errors?.name?.message}</span>}
             </div>
             <div htmlFor="popup__input_type_link" className="popup__field">
                 <input type="url"
+                    {...register("link", {
+                        required: 'Поле, обязательное к заполнению.',
+                        pattern: {
+                            value: UrlPattern,
+                            message: 'Введите корректную ссылку на изображение.'}
+                    })}
                     name="link"
                     className="popup__input popup__input_type_link"
                     placeholder="Ссылка на картинку"
                     id="link-input"
-                    required
                     onChange={(e) => { setCardLink(e.target.value) }}
                     value={cardLink} />
-                <span className="popup__input-error link-input-error"></span>
+                {errors?.link && <span className="popup__input-error link-input-error popup__error_visible">{errors?.link?.message}</span>}
             </div>
         </PopupWithForm>
     )

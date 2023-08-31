@@ -1,14 +1,27 @@
 import React, { useEffect, useState, useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "react-hook-form"
+import { UrlPattern } from '../utils/UrlPattern.js'
 
 export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
     const [profileAvatar, setUserAvatar] = useState('');
     const currentUser = useContext(CurrentUserContext);
 
+    const {
+        register,
+        formState: { errors, isValid },
+        watch,
+        handleSubmit,
+        reset,
+    } = useForm({
+        mode: "onBlur",
+    })
+
     useEffect(() => {
         if (isOpen && currentUser) {
-            setUserAvatar('')
+            setUserAvatar('');
+            reset();
         }
     }, [currentUser, isOpen]);
 
@@ -16,8 +29,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
         setUserAvatar(e.target.value);
     };
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    function onSubmit() {
         onUpdateAvatar({
             avatar: profileAvatar
         });
@@ -29,21 +41,28 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
             title='Обновить аватар'
             isOpen={isOpen}
             onClose={onClose}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit(onSubmit)}
             buttonText='Изменить'
             buttonTextLoading='Изменение...'
             isLoading={isLoading}
+            isValid={isValid}
         >
             <div htmlFor="popup__input_type_link" className="popup__field">
-                <input type="url"
-                    name="avatar"
-                    className="popup__input popup__input_type_link"
+                <input
+                    type='url'
+                    {...register('avatar', {
+                        required: 'Поле, обязательноe к заполнению.',
+                        pattern: {
+                            value: UrlPattern,
+                            message: 'Введите корректную ссылку на изображение.'}
+                    })}
+                    className={`popup__input popup__input_type_link`}
                     placeholder="Ссылка на картинку"
                     id="avatar-input"
                     onChange={onChange}
                     value={profileAvatar || ''}
-                    required />
-                <span className="popup__input-error avatar-input-error"></span>
+                />
+                {errors?.avatar && <span className="popup__input-error avatar-input-error popup__error_visible">{errors?.avatar?.message}</span>}
             </div>
         </PopupWithForm>
     )
