@@ -10,6 +10,7 @@ export default function ConfirmPopup({ isOpen, isLoading, onClose, handleSubmit 
 
     return (
         <PopupWithForm
+            isValid={true}
             name='confirm'
             title='Вы уверены'
             isOpen={isOpen}
