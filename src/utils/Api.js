@@ -76,6 +76,44 @@ class Api {
       headers: this._headers,
     }).then((res) => this._checkServerResponse(res));
   }
+
+  registerNewUser({email, password}) {
+    return fetch('https://auth.nomoreparties.co/signup', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application.json'
+      },
+      body: JSON.stringify({
+        email, password
+      })
+      .then((res) => {
+        try {
+          if (res.status === 200) {
+            return res.json()
+          }
+        } catch(e) {
+          return (e)
+        }
+      })
+      .then((res) => {
+        return res
+      })
+    })
+    .catch((err) => console.log(err))
+  }
+
+  authorizeAvalibleUser({email, password}) {
+    return fetch('https://mesto.nomoreparties.co/suignin', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json" 
+      },
+      body: {
+        
+      }
+    })
+  }
 }
 
 export const api = new Api({

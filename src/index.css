@@ -6,6 +6,9 @@
 
 @import url("./blocks/header/header.css");
 @import url("./blocks/header/__logo/header__logo.css");
+@import url("./blocks/header/__container/header__container.css");
+@import url("./blocks/header/__button/header__button.css");
+@import url("./blocks/header/__user-email/header__user-email.css");
 
 @import url("./blocks/profile/__button__edit/profile__button-edit.css");
 @import url("./blocks/profile/__button-add/profile__button-add.css");
@@ -54,3 +57,14 @@
 @import url('./blocks/popup/__container/popup__container-confirm.css');
 @import url('./blocks/popup/__title/popup__title_confirm.css');
 @import url('./blocks/popup/__container/popup__container-update.css');
+
+@import url("./blocks/auth/auth.css");
+@import url("./blocks/auth/__form/auth__form.css");
+@import url("./blocks/auth/__input/auth__input.css");
+@import url("./blocks/auth/__input/_type/auth__input_type-email.css");
+@import url("./blocks/auth/__input/_type/auth__input_type-password.css");
+@import url("./blocks/auth/__login-link/auth__login-link.css");
+@import url("./blocks/auth/__signin/auth__signin.css");
+@import url("./blocks/auth/__submit-btn/auth__submit-btn.css");
+@import url("./blocks/auth/__title/auth__title.css");
+/* * { outline: 1px solid yellow; } */
