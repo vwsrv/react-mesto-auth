@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 import Header from './Header.jsx';
+import Register from './Register.jsx'
+import Login from './Login.jsx'
 import Main from './Main.jsx';
 import Footer from './Footer.jsx';
 import EditProfilePopup from './EditProfilePopup.jsx';
@@ -9,6 +12,7 @@ import AddPlacePopup from './AddPlacePopup.jsx';
 import ConfirmPopup from './ConfirmPopup.jsx';
 import { api } from '../utils/Api.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext.js';
+import {ProtectedRouteElement} from '../utils/ProtectedRoute.jsx'
 
 function App() {
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -20,6 +24,7 @@ function App() {
     const [cards, setCards] = useState([]);
     const [cardToDelete, setCardToDelete] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoggedin, setIsLoggedOn] = useState(false);
 
     useEffect(() => {
         api.getInitialCards()
@@ -154,17 +159,27 @@ function App() {
 
     return (
         <div className="page">
-            <Header />
+            <BrowserRouter>
+            <Header 
+                isLoggedIn={isLoggedin}
+            />
             <CurrentUserContext.Provider value={currentUser}>
-                <Main
+            <Routes>
+                <Route path='/' element={isLoggedin ? <Navigate to='/content' replace/> : <Navigate to='/sign-up' replace />} />
+                <Route path='/sign-up' element={<Register />} />
+                <Route path='/sign-in' element={<Login />} />
+                <Route path='/content' element={<ProtectedRouteElement element={
+                    <Main
                     cards={cards}
                     onEditAvatar={handleEditAvatarClick}
                     onEditProfile={handleEditProfileClick}
                     onAddPlace={handleAddPlaceClick}
                     onCardClick={handleCardClick}
                     onCardLike={handleCardLike}
-                    onCardDelete={handleDeleteCard}
+                    onCardDelete={handleDeleteCard}/>}
+                    />}
                 />
+            </Routes>       
                 <Footer />
                 <EditProfilePopup
                     isOpen={isEditProfilePopupOpen}
@@ -197,6 +212,7 @@ function App() {
                     handleSubmit={handleDeleteConfirmation}
                 />
             </CurrentUserContext.Provider>
+            </BrowserRouter>
         </div>
     )
 }
