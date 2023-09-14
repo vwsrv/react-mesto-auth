@@ -45,7 +45,7 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
             buttonTextLoading='Подождите...'
             isLoading={isLoading}
             isValid={isValid}>
-            <div htmlFor="popup__input_type_title" className="popup__field">
+            <label htmlFor="popup__input_type_title" className="popup__field">
                 <input
                     {...register("name", {
                         required: 'Поле, обязательное к заполнению',
@@ -65,8 +65,8 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
                     value={cardTitle}
                 />
                 {errors?.name && <span className="popup__input-error title-input-error popup__error_visible">{errors?.name?.message}</span>}
-            </div>
-            <div htmlFor="popup__input_type_link" className="popup__field">
+            </label>
+            <label htmlFor="popup__input_type_link" className="popup__field">
                 <input type="url"
                     {...register("link", {
                         required: 'Поле, обязательное к заполнению.',
@@ -82,7 +82,7 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
                     onChange={(e) => { setCardLink(e.target.value) }}
                     value={cardLink} />
                 {errors?.link && <span className="popup__input-error link-input-error popup__error_visible">{errors?.link?.message}</span>}
-            </div>
+            </label>
         </PopupWithForm>
     )
 }

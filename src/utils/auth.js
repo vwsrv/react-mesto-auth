@@ -1,5 +1,13 @@
 const BASE_URL = 'https://auth.nomoreparties.co'
-  
+
+async function checkServerResponse(res) {
+  if (res.ok) {
+    return res.json();
+  } 
+  const errorText = await res.text()
+  throw new Error(`Ошибка соединения ${res.status}: ${errorText}`);
+}
+
 export function register(email, password) {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -9,7 +17,7 @@ export function register(email, password) {
     body: JSON.stringify({email, password})
   })
   .then((res) => {
-    return res.json()
+    return checkServerResponse(res);
   })
 }
 
@@ -21,9 +29,9 @@ export function authorize(email, password) {
     },
     body: JSON.stringify({email, password})
   })
-  .then((res) => {
-    return res.json()
-  })
+    .then((res) =>{
+      return checkServerResponse(res)
+    })
 };
 
 export function getContent(jwt) {
@@ -35,6 +43,6 @@ export function getContent(jwt) {
     },
   })
   .then((res) => {
-    return res.json()
+    return checkServerResponse(res);
   })
 }

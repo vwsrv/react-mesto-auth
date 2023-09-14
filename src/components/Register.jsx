@@ -1,12 +1,22 @@
 import React, { useState} from "react";
+import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 
 export default function Register({onRegister}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            errors,
+            isValid
+        }
+    } = useForm({
+        mode: "onBlur"
+    })
 
-    function onSubmit(e) {
-        e.preventDefault();
+    function onSubmit() {
         onRegister({password, email})
     }
 
@@ -14,25 +24,37 @@ export default function Register({onRegister}) {
         <div className="auth">
             <p className="auth__title">Регистрация</p>
             <form className="auth__form"
-                onSubmit={onSubmit}
+                onSubmit={handleSubmit(onSubmit)}
             >
-                <label htmlFor="user-email">
-                    <input
-                        value={email}
-                        onChange={(e) => {setEmail(e.target.value)}}
-                        type="email" 
-                        className="auth__input auth__input_type-email" 
-                        placeholder="Email" />
-                </label>
-                <label htmlFor="user-password">
-                    <input
-                        value={password}
-                        onChange={(e) => {setPassword(e.target.value)}}
-                        type="text" 
-                        className="auth__input auth__input_type-password" 
-                        placeholder="Пароль"/>
-                </label>
-                <button type="submit" className="auth__submit-btn">Зарегистрироваться</button>
+                <fieldset className="popup__set">
+                    <label className="popup__field" htmlFor="user-email">
+                        <input
+                            {...register('email', {
+                                required: 'Поле, обязательное к заполнению',
+                            })}
+                            value={email}
+                            onChange={(e) => {setEmail(e.target.value)}}
+                            type="email" 
+                            className="auth__input auth__input_type-email" 
+                            placeholder="Email" />
+                        {errors?.email && <span className="popup__input-error name-input-error popup__error_visible">{errors?.email?.message}</span>}
+                    </label>
+                    <label className="popup__field" htmlFor="user-password">
+                        <input
+                            {...register('password', {
+                                required: 'Поле, обязательное к заполнению',
+                                minLength: {value: 8,
+                                    message: 'Минимальная длина пароля: 8 символов'}
+                            })}
+                            value={password}
+                            onChange={(e) => {setPassword(e.target.value)}}
+                            type="password" 
+                            className="auth__input auth__input_type-password" 
+                            placeholder="Пароль"/>
+                        {errors?.password && <span className="popup__input-error name-input-error popup__error_visible">{errors?.password?.message}</span>}
+                    </label>
+                </fieldset>
+                <button type="submit" className={isValid ? `auth__submit-btn` : `auth__submit-btn_inactive`}>Войти</button>
                 <div className="auth__signin">
                     <p>Уже зарегистрированы?</p>
                     <NavLink to='/signin' className="auth__login-link">Войти</NavLink>

@@ -8,6 +8,7 @@
 @import url("./blocks/header/__logo/header__logo.css");
 @import url("./blocks/header/__container/header__container.css");
 @import url("./blocks/header/__button/header__button.css");
+@import url("./blocks/header/__button/_type/header__button_active.css");
 @import url("./blocks/header/__user-email/header__user-email.css");
 
 @import url("./blocks/profile/__button__edit/profile__button-edit.css");
@@ -45,6 +46,9 @@
 @import url("./blocks/popup/__submit-btn/_inactive/popup__submit-btn_inactive.css");
 @import url("./blocks/popup/__input/-error/popup__input-error.css");
 @import url("./blocks/popup/__error/popup__error_visible.css");
+@import url("./blocks/popup/__image/popup__image.css");
+@import url("./blocks/popup/__container/popup__container-info.css");
+@import url("./blocks/popup/__title/popup__title_info.css");
 
 @import url("./blocks/popup/__field/popup__field.css");
 @import url("./blocks/popup/__set/popup__set.css");
@@ -67,4 +71,5 @@
 @import url("./blocks/auth/__signin/auth__signin.css");
 @import url("./blocks/auth/__submit-btn/auth__submit-btn.css");
 @import url("./blocks/auth/__title/auth__title.css");
+@import url("./blocks/auth/__submit-btn/_inactive/auth__submit-btn_inactive.css");
 /* * { outline: 1px solid yellow; } */

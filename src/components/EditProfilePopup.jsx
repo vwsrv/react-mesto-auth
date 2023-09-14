@@ -45,7 +45,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
             buttonTextLoading='Сохранение...'
             isLoading={isLoading}
             isValid={isValid}>
-            <div htmlFor="popup__input_type_name" className="popup__field">
+            <label htmlFor="popup__input_type_name" className="popup__field">
                 <input
                     {...register('name', {
                         required: 'Поле, обязательное к заполнению',
@@ -65,8 +65,8 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
                     value={profileName || ''}
                 />
                 {errors?.name && <span className="popup__input-error name-input-error popup__error_visible">{errors?.name?.message}</span>}
-            </div>
-            <div htmlFor="popup__input_type_description" className="popup__field">
+            </label>
+            <label htmlFor="popup__input_type_description" className="popup__field">
                 <input
                     {...register('about', {
                         required: 'Поле обязательное к заполнению',
@@ -86,7 +86,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
                     onChange={(e) => { setDescription(e.target.value) }}
                     value={profileDescription || ''} required />
                 {errors?.about && <span className="popup__input-error description-input-error popup__error_visible">{errors?.about?.message}</span>}
-            </div>
+            </label>
         </PopupWithForm>
     )
 }

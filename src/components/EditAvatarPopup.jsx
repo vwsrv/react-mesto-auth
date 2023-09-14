@@ -47,7 +47,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
             isLoading={isLoading}
             isValid={isValid}
         >
-            <div htmlFor="popup__input_type_link" className="popup__field">
+            <label htmlFor="popup__input_type_link" className="popup__field">
                 <input
                     type='url'
                     {...register('avatar', {
@@ -63,7 +63,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
                     value={profileAvatar || ''}
                 />
                 {errors?.avatar && <span className="popup__input-error avatar-input-error popup__error_visible">{errors?.avatar?.message}</span>}
-            </div>
+            </label>
         </PopupWithForm>
     )
 }

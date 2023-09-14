@@ -1,38 +1,56 @@
-import React, {useState} from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useForm } from 'react-hook-form'
 
-export default function Login({onLogin}) {
+export default function Login({ onLogin }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
-    const navigate = useNavigate()
+    const {
+        register,
+        handleSubmit,
+        formState: {
+            errors,
+            isValid
+        }
+    } = useForm({
+        mode: "onBlur"
+    })
 
-    function onSubmit(e) {
-        e.preventDefault();
-        onLogin({email, password})
+    function onSubmit() {
+        onLogin({ email, password })
     }
 
     return (
         <div className="auth">
             <p className="auth__title">Вход</p>
             <form className="auth__form"
-                onSubmit={onSubmit}>
-                <label htmlFor="user-email">
-                    <input 
-                        onChange={(e) => {setEmail(e.target.value)}}
-                        value={email}
-                        type="email" 
-                        className="auth__input auth__input_type-email" 
-                        placeholder="Email" />
-                </label>
-                <label htmlFor="user-password">
-                    <input
-                        onChange={(e) => {setPassword(e.target.value)}}
-                        value={password}
-                        type="text" 
-                        className="auth__input auth__input_type-password" 
-                        placeholder="Пароль"/>
-                </label>
-                <button type="submit" className="auth__submit-btn">Войти</button>
+                onSubmit={handleSubmit(onSubmit)}>
+                <fieldset className="popup__set">
+                    <label className="popup__field" htmlFor="user-email">
+                        <input
+                            {...register('email', {
+                                required: 'Поле, обязательное к заполнению',
+                            })}
+                            onChange={(e) => { setEmail(e.target.value) }}
+                            value={email}
+                            type="email"
+                            className="auth__input auth__input_type-email"
+                            placeholder="Email" />
+                        {errors?.email && <span className="popup__input-error name-input-error popup__error_visible">{errors?.email?.message}</span>}
+                    </label>
+                    <label className="popup__field" htmlFor="user-password">
+                        <input
+                            {...register('password', {
+                                required: 'Поле, обязательное к заполнению',
+                            })}
+                            onChange={(e) => { setPassword(e.target.value) }}
+                            value={password}
+                            type="password"
+                            className="auth__input auth__input_type-password"
+                            placeholder="Пароль" />
+                        {errors?.password && <span className="popup__input-error name-input-error popup__error_visible">{errors?.password?.message}</span>}
+                    </label>
+                    <button type="submit" className={isValid ? `auth__submit-btn` : `auth__submit-btn_inactive`}>Войти</button>
+                </fieldset>
             </form>
         </div>
     )
