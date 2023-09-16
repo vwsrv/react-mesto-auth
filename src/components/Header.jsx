@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import headerLogo from '../images/header-logo.svg'
 import { Routes, Route } from "react-router-dom";
 
-export default function Header({onSignOut, email}) {
+export default function Header({ onSignOut, email }) {
     return (
         <Routes>
             <Route path='/' element={

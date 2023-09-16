@@ -8,7 +8,6 @@ export default function AddPlacePopup({ cards, isOpen, onClose, onAddPlace, isLo
     const [cardLink, setCardLink] = useState('');
     const {
         register,
-        watch,
         reset,
         handleSubmit,
         formState: {

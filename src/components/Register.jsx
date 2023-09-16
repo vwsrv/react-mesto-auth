@@ -14,29 +14,32 @@ export default function Register({onRegister}) {
         }
     } = useForm({
         mode: "onBlur"
-    })
+    });
 
     function onSubmit() {
         onRegister({password, email})
-    }
+    };
 
     return (
         <div className="auth">
             <p className="auth__title">Регистрация</p>
             <form className="auth__form"
                 onSubmit={handleSubmit(onSubmit)}
+                autoComplete="off" 
             >
                 <fieldset className="popup__set">
                     <label className="popup__field" htmlFor="user-email">
                         <input
                             {...register('email', {
                                 required: 'Поле, обязательное к заполнению',
+                                errors: 'Введите Email'
                             })}
                             value={email}
                             onChange={(e) => {setEmail(e.target.value)}}
                             type="email" 
                             className="auth__input auth__input_type-email" 
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            autoComplete="off"/>
                         {errors?.email && <span className="popup__input-error name-input-error popup__error_visible">{errors?.email?.message}</span>}
                     </label>
                     <label className="popup__field" htmlFor="user-password">
@@ -50,11 +53,12 @@ export default function Register({onRegister}) {
                             onChange={(e) => {setPassword(e.target.value)}}
                             type="password" 
                             className="auth__input auth__input_type-password" 
-                            placeholder="Пароль"/>
+                            placeholder="Пароль"
+                            autoComplete="off"/>
                         {errors?.password && <span className="popup__input-error name-input-error popup__error_visible">{errors?.password?.message}</span>}
                     </label>
                 </fieldset>
-                <button type="submit" className={isValid ? `auth__submit-btn` : `auth__submit-btn_inactive`}>Войти</button>
+                <button type="submit" className={isValid ? `auth__submit-btn` : `auth__submit-btn_inactive`}>Регистрация</button>
                 <div className="auth__signin">
                     <p>Уже зарегистрированы?</p>
                     <NavLink to='/signin' className="auth__login-link">Войти</NavLink>

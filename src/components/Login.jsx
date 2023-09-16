@@ -23,7 +23,8 @@ export default function Login({ onLogin }) {
         <div className="auth">
             <p className="auth__title">Вход</p>
             <form className="auth__form"
-                onSubmit={handleSubmit(onSubmit)}>
+                onSubmit={handleSubmit(onSubmit)}
+                autoComplete="off">
                 <fieldset className="popup__set">
                     <label className="popup__field" htmlFor="user-email">
                         <input
@@ -34,7 +35,8 @@ export default function Login({ onLogin }) {
                             value={email}
                             type="email"
                             className="auth__input auth__input_type-email"
-                            placeholder="Email" />
+                            placeholder="Email" 
+                            autoComplete="off" />
                         {errors?.email && <span className="popup__input-error name-input-error popup__error_visible">{errors?.email?.message}</span>}
                     </label>
                     <label className="popup__field" htmlFor="user-password">
@@ -46,7 +48,8 @@ export default function Login({ onLogin }) {
                             value={password}
                             type="password"
                             className="auth__input auth__input_type-password"
-                            placeholder="Пароль" />
+                            placeholder="Пароль" 
+                            autoComplete="off" />
                         {errors?.password && <span className="popup__input-error name-input-error popup__error_visible">{errors?.password?.message}</span>}
                     </label>
                     <button type="submit" className={isValid ? `auth__submit-btn` : `auth__submit-btn_inactive`}>Войти</button>

@@ -11,7 +11,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
     const {
         register,
         formState: { errors, isValid },
-        watch,
         handleSubmit,
         reset,
     } = useForm({

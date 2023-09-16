@@ -9,7 +9,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
     const currentUser = useContext(CurrentUserContext);
     const {
         register,
-        watch,
         handleSubmit,
         reset,
 

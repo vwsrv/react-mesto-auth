@@ -6,3 +6,9 @@
     line-height: 29.05px;
     text-align: center;
 }
+
+@media screen and (max-width: 920px) {
+    .auth__title {
+        margin-bottom: 40px;
+    }
+}
