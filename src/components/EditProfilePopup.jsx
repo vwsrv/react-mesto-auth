@@ -57,7 +57,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
                             message: 'Минимальная длин текущего значения: 40 символов'
                         }
                     })}
-                    isValid={isValid}
                     className="popup__input popup__input_type_name"
                     placeholder="Введите имя профиля" id="name-input"
                     onChange={(e) => { setName(e.target.value) }}
@@ -78,7 +77,6 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, isLoad
                             message: 'Минимальная длин текущего значения: 40 символов'
                         }
                     })}
-                    isValid={isValid}
                     className="popup__input popup__input_type_description"
                     placeholder="Введите описание профиля"
                     id="description-input"

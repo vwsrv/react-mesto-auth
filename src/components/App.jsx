@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom'
 import Header from './Header.jsx';
 import Register from './Register.jsx'
 import Login from './Login.jsx'
@@ -68,7 +68,10 @@ function App() {
                 .then((res) => {
                     setIsLoggedIn(true);
                     setUserEmail(res.data.email)
-                    navigate('/', { replace: true });
+                    navigate('/', { replace: true })
+                .catch((err) => {
+                    console.log(`Токен некорректен: ${error}`);
+                    })
                 });
         }
     }
@@ -197,10 +200,12 @@ function App() {
             .catch(() => {
                 setMessage({
                     status: false,
-                    text: 'Пользователь с таким Email уже зарегистрирован.'
+                    text: 'Что-то пошло не так! Попробуйте еще раз'
                 })
             })
-        setAuthStatusPopupOpen(true)
+            .finally(() => {
+                setAuthStatusPopupOpen(true)
+            })
     }
 
     function handleLogin({ email, password }) {
@@ -212,16 +217,22 @@ function App() {
                 })
                 token.setToken(res.token);
                 setIsLoggedIn(true);
-                tokenCheck();
                 navigate('/', { replace: true });
+                setUserEmail(res.data.email)
             })
             .catch(() => {
                 setMessage({
                     status: false,
-                    text: 'Проверьте правильность введеных email и пароля.'
+                    text: 'Что-то пошло не так! Попробуйте еще раз'
                 })
             })
-        setAuthStatusPopupOpen(true)
+            .finally(() => {
+                setMessage({
+                    status: true,
+                    text: 'Авторизация прошла успешно'
+                })
+                setAuthStatusPopupOpen(true)
+            })
     }
 
     function handleSignOut() {
@@ -237,6 +248,7 @@ function App() {
                     onSignOut={handleSignOut}
                 />
                 <Routes>
+                    <Route path="*" element={<Navigate to={isLoggedin ? "/" : "/signin"} />} />
                     <Route path='/signup' element={<Register
                         onRegister={handleRegister} />} />
                     <Route path='/signin' element={<Login
@@ -252,7 +264,7 @@ function App() {
                         onCardLike={handleCardLike}
                         onCardDelete={handleDeleteCard} />} />
                 </Routes>
-                {isLoggedin && <Footer />}
+                <Footer />
                 <EditProfilePopup
                     isOpen={isEditProfilePopupOpen}
                     onClose={closeAllPopups}
