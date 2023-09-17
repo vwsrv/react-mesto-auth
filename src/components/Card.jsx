@@ -15,7 +15,7 @@ export default function Card(props) {
     }
 
     function handleCardLike() {
-       onCardLike(card);
+        onCardLike(card);
     }
 
     function handleDeleteCard() {

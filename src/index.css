@@ -10,6 +10,10 @@
 @import url("./blocks/header/__button/header__button.css");
 @import url("./blocks/header/__button/_type/header__button_active.css");
 @import url("./blocks/header/__user-email/header__user-email.css");
+@import url("./blocks/header/__menu/header__menu.css");
+@import url("./blocks/header/__menu-line/header__menu-line.css");
+@import url("./blocks/header/__container/_type/header__container_type-mobile.css");
+@import url("./blocks/header/_type/header_type-mobile.css");
 
 @import url("./blocks/profile/__button__edit/profile__button-edit.css");
 @import url("./blocks/profile/__button-add/profile__button-add.css");

@@ -2,7 +2,7 @@ import React from "react";
 import succesLogo from '../images/succec__auth.svg';
 import errorLogo from '../images/error__auth.svg';
 
-export default function InfoToolTip({name, isOpen, onClose, authMessage}) {
+export default function InfoToolTip({ name, isOpen, onClose, authMessage }) {
     return (
         <div className={`popup popup_form_${name} ${isOpen && 'popup_opened'}`}>
             <div className={`popup__container popup__container-${name}`}>

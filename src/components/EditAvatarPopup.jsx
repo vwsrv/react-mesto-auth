@@ -53,7 +53,8 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoa
                         required: 'Поле, обязательноe к заполнению.',
                         pattern: {
                             value: UrlPattern,
-                            message: 'Введите корректную ссылку на изображение.'}
+                            message: 'Введите корректную ссылку на изображение.'
+                        }
                     })}
                     className={`popup__input popup__input_type_link`}
                     placeholder="Ссылка на картинку"

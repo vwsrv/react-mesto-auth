@@ -69,9 +69,9 @@ function App() {
                     setIsLoggedIn(true);
                     setUserEmail(res.data.email)
                     navigate('/', { replace: true })
-                .catch((err) => {
-                    console.log(`Токен некорректен: ${error}`);
-                    })
+                        .catch((err) => {
+                            console.log(`Токен некорректен: ${err}`);
+                        })
                 });
         }
     }
@@ -218,7 +218,7 @@ function App() {
                 token.setToken(res.token);
                 setIsLoggedIn(true);
                 navigate('/', { replace: true });
-                setUserEmail(res.data.email)
+                tokenCheck();
             })
             .catch(() => {
                 setMessage({
