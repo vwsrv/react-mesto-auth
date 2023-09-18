@@ -1,9 +1,9 @@
 {
-  "name": "mesto-react",
+  "name": "react-mesto-auth",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://vwsrv.github.io/mesto-react",
+  "homepage": "https://vwsrv.github.io/react-mesto-auth",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "find-cache-dir": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
