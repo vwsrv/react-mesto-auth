@@ -226,13 +226,7 @@ function App() {
                     text: 'Что-то пошло не так! Попробуйте еще раз'
                 })
             })
-            .finally(() => {
-                setMessage({
-                    status: true,
-                    text: 'Авторизация прошла успешно'
-                })
-                setAuthStatusPopupOpen(true)
-            })
+            setAuthStatusPopupOpen(true)
     }
 
     function handleSignOut() {

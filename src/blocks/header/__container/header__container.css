@@ -1,7 +1,5 @@
 .header__container {
     display: flex;
-    align-self: flex-start;
-    margin: 15px 0 0;
 }
 
 @media screen and (max-width: 920px) {

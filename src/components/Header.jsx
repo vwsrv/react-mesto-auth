@@ -10,50 +10,36 @@ export default function Header({ onSignOut, email }) {
         setIsActiveMenu(!isActiveMenu)
     }
 
+    function handleLogOut() {
+        setIsActiveMenu(false);
+        onSignOut();
+    }
+
     return (
-        <Routes>
-            <Route path='/' element={
-                <header className={isActiveMenu ? "header header_type-mobile" : "header"}>
-                    <img src={headerLogo}
-                        alt="Лого"
-                        className="header__logo" />
-                    <div className={isActiveMenu ? 'header__container header__container_type-mobile' : 'header__container'}>
-                        <p className="header__user-email">{email}</p>
-                        <NavLink to='/signin' className="header__button" onClick={onSignOut}>Выйти</NavLink>
+        <header className={isActiveMenu ? "header header_type-mobile" : "header"}>
+            <img src={headerLogo}
+                alt="Лого"
+                className="header__logo" />
+            <Routes>
+                <Route path="/" element={
+                    <div>
+                        <div className={isActiveMenu ? 'header__container header__container_type-mobile' : 'header__container'}>
+                            <p className="header__user-email">{email}</p>
+                            <NavLink to='/signin' className="header__button" onClick={handleLogOut}>Выйти</NavLink>
+                        </div>
+                        <button className={isActiveMenu ? "header__menu header__menu_active" : 'header__menu'}
+                            onClick={handleOpenHeaderMenu}>
+                            <span className="header__menu-line"></span>
+                            <span className="header__menu-line"></span>
+                            <span className="header__menu-line"></span>
+                        </button>
                     </div>
-                    <button className={isActiveMenu ? "header__menu header__menu_active" : 'header__menu'}
-                        onClick={handleOpenHeaderMenu}>
-                        <span className="header__menu-line"></span>
-                        <span className="header__menu-line"></span>
-                        <span className="header__menu-line"></span>
-                    </button>
-                </header>
-            }>
-            </Route>
-            <Route path='/signup' element={
-                <header className="header">
-                    <img src={headerLogo}
-                        alt="Лого"
-                        className="header__logo" />
-                    <div className="header__container">
-                        <p className="header__user-email"></p>
-                        <NavLink to='/signin' className="header__button_active">Войти</NavLink>
-                    </div>
-                </header>
-            }>
-            </Route>
-            <Route path='/signin' element={
-                <header className="header">
-                    <img src={headerLogo}
-                        alt="Лого"
-                        className="header__logo" />
-                    <div className="header__container">
-                        <p className="header__user-email"></p>
-                        <NavLink to='/signup' className="header__button_active">Регистрация</NavLink>
-                    </div>
-                </header>
-            }>
-            </Route>
-        </Routes>
+                } />
+                <Route path="/signin" element={
+                    <NavLink to='/signup' className="header__button_active">Регистрация</NavLink>} />
+                <Route path="/signup" element={
+                    <NavLink to='/signin' className="header__button_active">Войти</NavLink>} />
+            </Routes>
+        </header>
     );
 }
